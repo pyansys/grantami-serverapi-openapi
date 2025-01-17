@@ -47,6 +47,16 @@ The release process follows the standard [PyAnsys release guidelines](https://de
 
 Once the tag is pushed to GitHub, a workflow will build and publish the release.
 
+## Creating a new interface version
+
+Once a release is completed, the build scripts should be updated to build the new in-development version of the
+package, additionally the oldest release can be removed.
+
+1. Update the version number of the package in the ``version`` node of the pom.xml file to begin development
+2. Update the ``interface-dev-version`` element in the pom.xml file to refer to the current in-development version
+   of Granta MI. For example 24R2 would be ``v242``
+3. Remove the oldest folder from the ``src/ansys/grantami/serverapi_openapi`` directory, it is no longer supported
+4. Create a PR to merge these changes into main
 
 ## Using this package directly
 
@@ -95,8 +105,8 @@ Or with pip:
 ```
 
 ### Minimal setup
-The following code snippet demonstrates how to perform the minimal setup required to interact with the API using this
-library.
+The following code snippet demonstrates how to perform the minimal setup required to interact with the 2025 R1 version of the
+API using this library.
 
 ```python
 from typing import Optional
@@ -108,7 +118,7 @@ from ansys.openapi.common import (
     generate_user_agent,
     SessionConfiguration,
 )
-from ansys.grantami.serverapi_openapi import models
+from ansys.grantami.serverapi_openapi.v251 import models
 
 SERVICE_PATH = "/proxy/v1.svc/mi"  # "/proxy/v1.svc" for Granta MI 2024 R1 and older
 MI_AUTH_PATH = "/v1alpha/schema/mi-version"
